@@ -15,9 +15,8 @@ requests = "*"
 fastapi = "*"
 pandas = "*"
 uvicorn = "*"
-plotly = "*"
-fastapi-sqlalchemy = "*"
-gunicorn = "*"
+scikit-learn = "*"
+spacy = "*"
 
 [requires]
 python_version = "3.8"
