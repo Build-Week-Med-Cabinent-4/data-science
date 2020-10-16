@@ -9,7 +9,6 @@ from sklearn.neighbors import NearestNeighbors
 model = pickle.load(open("../models/nearest_neighbors_model.sav", "rb"))
 transformer = pickle.load(open("../models/transformer.sav", "rb"))
 strains = pd.read_csv("../data/clean/merged_dataset.csv")
-data/clean/merged_dataset.csv
 
 
 def predict(request_text):
