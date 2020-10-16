@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 # changed from relative to to full path
-model = pickle.load(open("./models/nearest_neighbors_model.sav", "rb"))
+model = pickle.load(open("./models/nn_model.sav", "rb"))
 transformer = pickle.load(open("./models/transformer.sav", "rb"))
 strains = pd.read_csv("./data/clean/merged_dataset.csv")
 
