@@ -11,9 +11,10 @@ router = APIRouter()
 
 
 # changed from relative to to full path
-model = pickle.load(open("\\models\\nn_model.pkl", "rb"))
-transformer = pickle.load(open("\\models\\transformer.pkl", "rb"))
-strains = pd.read_csv("./data/clean/merged_dataset.csv")
+
+model = pickle.load(open("../models/nn_model.pkl", "rb"))
+transformer = pickle.load(open("../models/transformer.pkl", "rb"))
+strains = pd.read_csv("../data/clean/merged_dataset.csv")
 
 @router.post('/predict')
 async def predict(request_text):
