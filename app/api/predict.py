@@ -16,6 +16,12 @@ router = APIRouter()
 # transformer = pickle.load(open("transformer.pkl", "rb"))
 strains = pd.read_csv("https://raw.githubusercontent.com/Build-Week-Med-Cabinent-4/data-science/main/data/clean/merged_dataset.csv")
 
+transformer = TfidfVectorizer(stop_words="english", min_df=0.025, max_df=0.98, ngram_range=(1,3))
+dtm = transformer.fit_transform(strains['lemmas'])
+dtm = pd.DataFrame(dtm.todense(), columns=transformer.get_feature_names())
+model = NearestNeighbors(n_neighbors=5, algorithm='kd_tree')
+model.fit(dtm)
+
 @router.post('/predict')
 async def predict(request_text):
     """
@@ -26,7 +32,7 @@ async def predict(request_text):
     
     transformed = transformer.transform([request_text])
     dense = transformed.todense()
-    recommendations = model.kneighbors(dense)[1][0][0]
+    recommendations = model.kneighbors(dense)[1][0]
     output_array = []
     for recommendation in recommendations:
         strain = strains.iloc[recommendation]
