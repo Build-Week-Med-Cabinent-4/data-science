@@ -10,6 +10,7 @@ jupyter = "*"
 pep8-naming = "*"
 pytest = "*"
 requests = "*"
+pylint = "*"
 
 [packages]
 fastapi = "*"
@@ -17,6 +18,7 @@ pandas = "*"
 uvicorn = "*"
 scikit-learn = "*"
 spacy = "*"
+sqlalchemy = "*"
 
 [requires]
 python_version = "3.8"
