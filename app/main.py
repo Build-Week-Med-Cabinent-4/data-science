@@ -1,3 +1,7 @@
+'''
+This main code of the API. 
+'''
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
