@@ -50,13 +50,15 @@ model.fit(dtm)
 @router.post('/predict')
 async def predict(inputs: Inputs):
     """
-    Predict the best strain of cannabis based on the ailment(s) you define.
+    Predict the best strain of cannabis based on the parameters you define.
     
-    This model will return what strain best suits your ailment(s).
+    This model will return what strain best suits your inputs.
     
     **Input:**
         
-        A string with your ailment(s), favorite flavor, type, and/or effects you desire.
+        - ailment : string (required) What is your ailment(s)?
+        - flavor : string (optional) What flavor(s) do you like?
+        - effects : string (optional) What effects do you desire?
     
     **Returns:**
     
