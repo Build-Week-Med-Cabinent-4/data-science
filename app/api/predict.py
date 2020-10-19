@@ -16,21 +16,61 @@ router = APIRouter()
 # transformer = pickle.load(open("transformer.pkl", "rb"))
 strains = pd.read_csv("https://raw.githubusercontent.com/Build-Week-Med-Cabinent-4/data-science/main/data/clean/merged_dataset.csv")
 
-transformer = TfidfVectorizer(stop_words="english", min_df=0.025, max_df=0.98, ngram_range=(1,3))
+
+from pydantic import BaseModel, Field, validator
+
+class Inputs(BaseModel):
+    """Use this data model to parse the request body JSON."""
+
+    ailment: str
+    flavor = ''
+    effects = '' 
+
+    def input_string(self):
+        """Convert pydantic object to string to prep for model."""
+        inputs = self.ailment + ' ' + self.flavor + ' ' + self.effects
+        return inputs
+    
+    @validator('ailment')
+    def ailment_must_have_val(cls, value):
+        """Validate that ailment has a value inputted."""
+        assert value != str, f'ailment == {value}, must have an input'
+        return value
+
+
+# Variables for predictive model.
+transformer = TfidfVectorizer(stop_words="english", min_df=0.025,
+                              max_df=0.98, ngram_range=(1,3))
 dtm = transformer.fit_transform(strains['lemmas'])
 dtm = pd.DataFrame(dtm.todense(), columns=transformer.get_feature_names())
 model = NearestNeighbors(n_neighbors=5, algorithm='kd_tree')
 model.fit(dtm)
 
+
 @router.post('/predict')
-async def predict(request_text):
+async def predict(inputs: Inputs):
     """
-    Predict the best strain of cannabis based on the parameters you define.
-    This model will return what strain best suits the ailment you define.
-    You can also select your favorite flavor and what effects you desire.
+    Predict the best strain of cannabis based on the ailment(s) you define.
+    
+    This model will return what strain best suits your ailment(s).
+    
+    **Input:**
+        
+        A string with your ailment(s), favorite flavor, type, and/or effects you desire.
+    
+    **Returns:**
+    
+        JSON file with the top 5 strains based on your inputs.
+        
+        For each strain you will get:
+            - Strain Name
+            - Type of Strain
+            - Effect(s)
+            - Flavor(s)
+            - Description
     """
     
-    transformed = transformer.transform([request_text])
+    transformed = transformer.transform([Inputs.input_string(inputs)])
     dense = transformed.todense()
     recommendations = model.kneighbors(dense)[1][0]
     output_array = []
@@ -40,25 +80,3 @@ async def predict(request_text):
             'name', 'ailment', 'all_text', 'lemmas']).to_dict()
         output_array.append(output)
     return output_array
-
-# from pydantic import BaseModel, Field, validator
-
-# class Effects(BaseModel):
-#     """Use this data model to parse the request body JSON."""
-
-#     ailment: str = Field(..., example='insomnia')
-#     flavor: str = Field(..., example='citrus')
-#     effects: str = Field(..., example='relaxed')
-
-#     def to_df(self):
-#         """Convert pydantic object to pandas dataframe with 1 row."""
-#         return pd.DataFrame([dict(self)])
-
-    # @validator('x1')
-    # def x1_must_be_positive(cls, value):
-    #     """Validate that x1 is a positive number."""
-    #     assert value > 0, f'x1 == {value}, must be > 0'
-    #     return value
-
-   
-
