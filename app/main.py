@@ -1,0 +1,38 @@
+'''
+This main code of the API. 
+'''
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
+
+from app.api import predict
+
+app = FastAPI(
+    title='Cannabis Strains',
+    description='API to predict best strain of cannabis based on selected parameters.',
+    version='0.1',
+    docs_url='/',
+)
+
+app.include_router(predict.router)
+
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origin_regex='https?://.*',
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
+
+if __name__ == '__main__':
+    uvicorn.run(app)
