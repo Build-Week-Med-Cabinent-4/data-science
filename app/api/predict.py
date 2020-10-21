@@ -79,6 +79,6 @@ async def predict(inputs: Inputs):
     for recommendation in recommendations:
         strain = strains.iloc[recommendation]
         output = strain.drop([
-            'name', 'ailment', 'all_text', 'lemmas']).to_dict()
+            'Unnamed: 0', 'name', 'ailment', 'all_text', 'lemmas']).to_dict()
         output_array.append(output)
     return output_array
