@@ -16,15 +16,15 @@ router = APIRouter()
 #     clf = pickle.load(rf)
 # model = pickle.load(open("../../models/nn_model.pkl", "rb"))
 # transformer = pickle.load(open("../../models/transformer.pkl", "rb"))
-strains = pd.read_csv("https://raw.githubusercontent.com/Build-Week-Med-Cabinent-4/data-science/main/data/clean/merged_dataset.csv")
+strains = pd.read_csv("https://raw.githubusercontent.com/Build-Week-Med-Cabinent-4/data-science/Joanne/data/clean/merged_dataset.csv")
 strains['Id'] = strains['Id'].astype(str)
 
 class Inputs(BaseModel):
     """Use this data model to parse the request body JSON."""
 
     ailment: str = Field(..., example="stress and insomnia")
-    flavor = '' = Field(..., example="orange")
-    effects = '' = Field(..., example="relaxing")
+    flavor = ''
+    effects = ''
 
     def input_string(self):
         """Convert pydantic object to string to prep for model."""
