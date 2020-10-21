@@ -18,7 +18,9 @@ pandas = "*"
 uvicorn = "*"
 scikit-learn = "*"
 spacy = "*"
-sqlalchemy = "*"
+psycopg2-binary = "*"
+fastapi-sqlalchemy = "*"
+pydantic = "*"
 
 [requires]
 python_version = "3.8"
