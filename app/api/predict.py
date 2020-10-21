@@ -16,7 +16,7 @@ router = APIRouter()
 #     clf = pickle.load(rf)
 # model = pickle.load(open("../../models/nn_model.pkl", "rb"))
 # transformer = pickle.load(open("../../models/transformer.pkl", "rb"))
-strains = pd.read_csv("https://raw.githubusercontent.com/Build-Week-Med-Cabinent-4/data-science/main/data/clean/merged_dataset.csv")
+strains = pd.read_csv("https://raw.githubusercontent.com/Build-Week-Med-Cabinent-4/data-science/Joanne/data/clean/merged_dataset.csv")
 strains['Id'] = strains['Id'].astype(str)
 
 class Inputs(BaseModel):
