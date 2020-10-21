@@ -22,9 +22,9 @@ strains['Id'] = strains['Id'].astype(str)
 class Inputs(BaseModel):
     """Use this data model to parse the request body JSON."""
 
-    ailment: str
-    flavor = ''
-    effects = '' 
+    ailment: str = Field(..., example="stress and insomnia")
+    flavor = '' = Field(..., example="orange")
+    effects = '' = Field(..., example="relaxing")
 
     def input_string(self):
         """Convert pydantic object to string to prep for model."""
