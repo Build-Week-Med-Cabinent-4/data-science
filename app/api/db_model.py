@@ -100,19 +100,19 @@ async def show_strains(db: Session = Depends(get_db)):
     return strains
 
 # Set the route for the input table:
-@router.get('/inputs', response_model=List[schemas.InputsDB])
-async def show_inputs(db: Session = Depends(get_db)):
-    '''
-    View the inputs that have been searched to date from our database.
+# @router.get('/inputs', response_model=List[schemas.InputsDB])
+# async def show_inputs(db: Session = Depends(get_db)):
+#     '''
+#     View the inputs that have been searched to date from our database.
     
-    Features in this table include:
-    * **ID**: The id number assigned to the strain (Primary Key)
-    * **Ailment_In**: What ailment(s) the strain is known for helping
-    * **Flavor_In**: A description of the flavor associated with the strain
-    * **Effect_In**: What kind of effect(s) know for the strain
-    * **Strain_ID**: Connects the strain table to this table.
-    '''
-    inputs_db = db.query(InputsDB).all()
-    return inputs_db
+#     Features in this table include:
+#     * **ID**: The id number assigned to the strain (Primary Key)
+#     * **Ailment_In**: What ailment(s) the strain is known for helping
+#     * **Flavor_In**: A description of the flavor associated with the strain
+#     * **Effect_In**: What kind of effect(s) know for the strain
+#     * **Strain_ID**: Connects the strain table to this table.
+#     '''
+#     inputs_db = db.query(InputsDB).all()
+#     return inputs_db
 
 db.close()
