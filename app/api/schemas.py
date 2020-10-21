@@ -1,30 +1,23 @@
 from pydantic import BaseModel
 
 class Strains(BaseModel):
-    id: int
-    strain_name: str
-    strain_type: str
-    description: str
+    ID: int
+    Strain_Name: str
+    Strain_Type: str
+    Effect: str
+    Ailment: str
+    Flavor: str
+    Description: str
 
-    class Config:
-        orm_mode = True
-
-class Effects(BaseModel):
-    id: int
-    effect: str
-    ailment: str
-    flavor: str
-    strain_id: int
-    
     class Config:
         orm_mode = True
 
 class InputsDB(BaseModel):
-    id: int
-    ailment_in: str
-    flavor_in: str
-    effects_in: str
-    strain_id: int
+    ID: int
+    Ailment_in: str
+    Flavor_in: str
+    Effects_in: str
+    Strain_ID: int
     
     class Config:
         orm_mode = True

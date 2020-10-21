@@ -11,8 +11,6 @@ from sklearn.neighbors import NearestNeighbors
 log = logging.getLogger(__name__)
 router = APIRouter()
 
-# changed from relative to to full path
-
 # model = pickle.load(open("nn_model.pkl", "rb"))
 # transformer = pickle.load(open("transformer.pkl", "rb"))
 strains = pd.read_csv("https://raw.githubusercontent.com/Build-Week-Med-Cabinent-4/data-science/main/data/clean/merged_dataset.csv")

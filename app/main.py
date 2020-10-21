@@ -1,7 +1,6 @@
 '''
 This main code of the API. 
 '''
-from typing import List
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -9,23 +8,27 @@ import uvicorn
 
 from app.api import predict
 from app.api import db_model, schemas
-from app.database import SessionLocal, engine
-from . import csv_to_db
 
+
+description = """
+API to predict best strain of cannabis based on selected parameters.
+
+<img src="https://thumbs.dreamstime.com/b/marijuana-panorama-farm-field-green-65019611.jpg" width="70%" />
+
+This API utilizes a K Nearest Neighbors model for the prediction function.
+"""
 
 # Create an app instance
 app = FastAPI(
     title='Cannabis Strains',
-    description='API to predict best strain of cannabis based on selected parameters.',
+    description=description,
     version='0.1',
     docs_url='/',
 )
 
-# Create the database
-db_model.Base.metadata.create_all(bind=engine)
-
-# Create the route for the predictions
+# Connect the routes
 app.include_router(predict.router)
+app.include_router(db_model.router)
 
 # Origins allowed for CORSMiddleware
 origins = [
@@ -46,44 +49,6 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
-def get_db():
-    '''This function will return the data from database.'''
-    try:
-        db = SessionLocal()
-        yield db
-    finally:
-        db.close()
-
-# Set the route for the strains table
-@app.get('/strains', response_model=List[schemas.Strains])
-async def show_strains(db: Session = Depends(get_db)):
-    '''
-    View the strain table information we have in our database.
-    
-    Features in this table include:
-    * **id**: The id number assigned to the strain (Primary Key)
-    * **strain_name**: The name of the strain
-    * **strain_type**: The type of strain
-    * **description**: Describes the strain
-    '''
-    strains = db.query(db_model.Strains).all()
-    return strains
-
-# Set the route for the effects table
-@app.get('/effects', response_model=List[schemas.Effects])
-async def show_effects(db: Session = Depends(get_db)):
-    '''
-    View the effects table information we have in our database.
-    
-    Features in this table include:
-    * **id**: The id number assigned to the effects (Primary Key)
-    * **effect**: What kind of effect(s) know for the strain
-    * **ailment**: What ailment(s) the strain is known for helping
-    * **flavor**: A description of the flavor associated with the strain
-    * **strain_id**: Connects the strain id to the strain table's id
-    '''
-    effects = db.query(db_model.Effects).all()
-    return effects
 
 # Allows running the app locally
 if __name__ == '__main__':
