@@ -31,11 +31,11 @@ class Inputs(BaseModel):
         inputs = self.ailment + ' ' + self.flavor + ' ' + self.effects
         return inputs
     
-    @validator('ailment')
-    def ailment_must_have_val(cls, value):
-        """Validate that ailment has a value inputted."""
-        assert value != str, f'ailment == {value}, must have an input'
-        return value
+    # @validator('ailment')
+    # def ailment_must_have_val(cls, value):
+    #     """Validate that ailment has a value inputted."""
+    #     assert value != str, f'ailment == {value}, must have an input'
+    #     return value
 
 
 # Variables for predictive model.
