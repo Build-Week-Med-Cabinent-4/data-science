@@ -22,20 +22,20 @@ strains['Id'] = strains['Id'].astype(str)
 class Inputs(BaseModel):
     """Use this data model to parse the request body JSON."""
 
-    ailment: str
-    flavor = ''
-    effects = '' 
+    ailment: str = Field(..., example="stress and insomnia")
+    flavor = '' = Field(..., example="orange")
+    effects = '' = Field(..., example="relaxing")
 
     def input_string(self):
         """Convert pydantic object to string to prep for model."""
         inputs = self.ailment + ' ' + self.flavor + ' ' + self.effects
         return inputs
     
-    @validator('ailment')
-    def ailment_must_have_val(cls, value):
-        """Validate that ailment has a value inputted."""
-        assert value != str, f'ailment == {value}, must have an input'
-        return value
+    # @validator('ailment')
+    # def ailment_must_have_val(cls, value):
+    #     """Validate that ailment has a value inputted."""
+    #     assert value != str, f'ailment == {value}, must have an input'
+    #     return value
 
 
 # Variables for predictive model.
