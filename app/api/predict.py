@@ -1,23 +1,23 @@
+import os
 import logging
 import random
 from fastapi import APIRouter
+from pydantic import BaseModel, Field, validator
 import pandas as pd
 import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import NearestNeighbors
 
+
 log = logging.getLogger(__name__)
 router = APIRouter()
 
-
-# changed from relative to to full path
-
-# model = pickle.load(open("nn_model.pkl", "rb"))
-# transformer = pickle.load(open("transformer.pkl", "rb"))
+# with open("../models/nn_model.pkl", "rb") as rf:
+#     clf = pickle.load(rf)
+# model = pickle.load(open("../../models/nn_model.pkl", "rb"))
+# transformer = pickle.load(open("../../models/transformer.pkl", "rb"))
 strains = pd.read_csv("https://raw.githubusercontent.com/Build-Week-Med-Cabinent-4/data-science/main/data/clean/merged_dataset.csv")
-
-
-from pydantic import BaseModel, Field, validator
+strains['Id'] = strains['Id'].astype(str)
 
 class Inputs(BaseModel):
     """Use this data model to parse the request body JSON."""
@@ -56,20 +56,20 @@ async def predict(inputs: Inputs):
     
     **Input:**
         
-        - ailment : string (required) What is your ailment(s)?
-        - flavor : string (optional) What flavor(s) do you like?
-        - effects : string (optional) What effects do you desire?
+    * **ailment** : string (required) What is your ailment(s)?
+    * **flavor** : string (optional) What flavor(s) do you like?
+    * **effects** : string (optional) What effects do you desire?
     
     **Returns:**
     
-        JSON file with the top 5 strains based on your inputs.
-        
-        For each strain you will get:
-            - Strain Name
-            - Type of Strain
-            - Effect(s)
-            - Flavor(s)
-            - Description
+    JSON file with the top 5 strains based on your inputs.
+    
+    For each strain you will get:
+    * Strain Name
+    * Type of Strain
+    * Effect(s)
+    * Flavor(s)
+    * Description
     """
     
     transformed = transformer.transform([Inputs.input_string(inputs)])
