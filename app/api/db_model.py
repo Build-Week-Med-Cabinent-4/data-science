@@ -3,28 +3,27 @@ from os import getenv
 from typing import List
 import pandas as pd
 from fastapi import APIRouter, Depends
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship, Session
+from sqlalchemy.orm import sessionmaker, Session
 from . import schemas
-from .predict import Inputs
 
 
-# log = logging.getLogger(__name__)
 router = APIRouter()
 
 SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, 
+SessionLocal = sessionmaker(autocommit=False,
                             autoflush=False, bind=engine)
 
 Base = declarative_base()
 
+
 class Strains(Base):
-    
+
     __tablename__ = 'strains'
-    
+
     ID = Column(Integer, primary_key=True)
     Strain_Name = Column(String(55), nullable=False)
     Strain_Type = Column(String(55))
@@ -33,10 +32,11 @@ class Strains(Base):
     Ailment = Column(String)
     Flavor = Column(String)
 
+
 class InputsDB(Base):
-    
+
     __tablename__ = 'inputs_db'
-    
+
     ID = Column(Integer, primary_key=True)
     Ailment_In = Column(String, nullable=False)
     Flavor_In = Column(String)
@@ -47,8 +47,8 @@ db = SessionLocal()
 if not engine.dialect.has_table(engine, 'strains'):
     Base.metadata.create_all(bind=engine)
 
-'''Needed to comment out the code below after creating the database with 
-the static csv dataset to prevent duplication. This part of the function 
+'''Needed to comment out the code below after creating the database with
+the static csv dataset to prevent duplication. This part of the function
 will need to be researched more to find a better option.'''
 # url = 'https://raw.githubusercontent.com/Build-Week-Med-Cabinent-4/data-science/main/data/clean/merged_dataset.csv'
 
@@ -56,7 +56,7 @@ will need to be researched more to find a better option.'''
 # data = df.to_dict()
 
 # for _,row in df.iterrows():
-    
+
 #     strains_db = Strains(
 #         Strain_Name=row['Strain'],
 #         Strain_Type=row['Type'],
@@ -69,6 +69,7 @@ will need to be researched more to find a better option.'''
 
 # db.commit()
 
+
 def get_db():
     '''This function will return the data from database.'''
     try:
@@ -77,12 +78,13 @@ def get_db():
     finally:
         db.close()
 
+
 # Set the route for the strains table
 @router.get('/strains', response_model=List[schemas.Strains])
-async def show_strains(db: Session = Depends(get_db)):
+async def show_strains(db: Session=Depends(get_db)):
     '''
     View the strain table information we have in our database.
-    
+
     Features in this table include:
     * **ID**: The id number assigned to the strain (Primary Key)
     * **Strain_Name**: The name of the strain
@@ -94,35 +96,3 @@ async def show_strains(db: Session = Depends(get_db)):
     '''
     strains = db.query(Strains).all()
     return strains
-
-# Set the route for the input table:
-@router.get('/inputs', response_model=List[schemas.InputsDB])
-async def show_inputs(db: Session = Depends(get_db)):
-    '''
-    View the inputs that have been searched to date from our database.
-    
-    Features in this table include:
-    * **ID**: The id number assigned to the strain (Primary Key)
-    * **Ailment_In**: What ailment(s) the strain is known for helping
-    * **Flavor_In**: A description of the flavor associated with the strain
-    * **Effect_In**: What kind of effect(s) know for the strain
-    '''
-    inputs_db = db.query(InputsDB).all()
-    return inputs_db
-
-@router.post('/inputs')
-async def save_input(db: Session = Depends(Inputs)):
-    '''This function will add the data from the user inputs to the database.'''
-    try:
-        db = SessionLocal()
-        user_inputs = InputsDB(
-            Ailment_In=Inputs.ailment,
-            Flavor_In=Inputs.flavor,
-            Effects_In=Inputs.effects
-        )
-        db.add(user_inputs)
-    finally:
-        db.commit()
-
-
-db.close()

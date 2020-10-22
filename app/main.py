@@ -17,7 +17,7 @@ API to predict best strain of cannabis based on selected parameters.
 
 This API utilizes a K Nearest Neighbors model for the prediction function.
 
-You can read the docs for this API at https://strains-cannabis.herokuapp.com/redoc
+You can read the docs for this API at [https://strains-cannabis.herokuapp.com/redoc](https://strains-cannabis.herokuapp.com/redoc)
 """
 
 # Create an app instance
