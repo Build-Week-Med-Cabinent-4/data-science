@@ -17,11 +17,9 @@ router = APIRouter()
 # model = pickle.load(open("../../models/nn_model.pkl", "rb"))
 # transformer = pickle.load(open("../../models/transformer.pkl", "rb"))
 strains = pd.read_csv("https://raw.githubusercontent.com/Build-Week-Med-Cabinent-4/data-science/main/data/clean/merged_dataset.csv")
-<<<<<<< HEAD
-strains['Id'] = strians['Id'].astype(str)
-=======
+'''Needed to convert the Id column to a string type in order to display using 
+ Fast API'''
 strains['Id'] = strains['Id'].astype(str)
->>>>>>> 27f0d6e5abbd724239833451d13f886fed8b631d
 
 class Inputs(BaseModel):
     """Use this data model to parse the request body JSON."""
