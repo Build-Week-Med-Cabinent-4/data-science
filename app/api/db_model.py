@@ -53,8 +53,9 @@ db = SessionLocal()
 if not engine.dialect.has_table(engine, 'strains'):
     Base.metadata.create_all(bind=engine)
 
-'''Needed to comment out the code below after creating the database with the static csv dataset 
-to prevent duplication. This part of the function will need to be researched more to find a better option.'''
+'''Needed to comment out the code below after creating the database with 
+the static csv dataset to prevent duplication. This part of the function 
+will need to be researched more to find a better option.'''
 # url = 'https://raw.githubusercontent.com/Build-Week-Med-Cabinent-4/data-science/main/data/clean/merged_dataset.csv'
 
 # df = pd.read_csv(url)
@@ -99,5 +100,21 @@ async def show_strains(db: Session = Depends(get_db)):
     '''
     strains = db.query(Strains).all()
     return strains
+
+# Set the route for the input table:
+# @router.get('/inputs', response_model=List[schemas.InputsDB])
+# async def show_inputs(db: Session = Depends(get_db)):
+#     '''
+#     View the inputs that have been searched to date from our database.
+    
+#     Features in this table include:
+#     * **ID**: The id number assigned to the strain (Primary Key)
+#     * **Ailment_In**: What ailment(s) the strain is known for helping
+#     * **Flavor_In**: A description of the flavor associated with the strain
+#     * **Effect_In**: What kind of effect(s) know for the strain
+#     * **Strain_ID**: Connects the strain table to this table.
+#     '''
+#     inputs_db = db.query(InputsDB).all()
+#     return inputs_db
 
 db.close()

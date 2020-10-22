@@ -1,3 +1,4 @@
+import os
 import logging
 import random
 from fastapi import APIRouter
@@ -11,28 +12,34 @@ from sklearn.neighbors import NearestNeighbors
 log = logging.getLogger(__name__)
 router = APIRouter()
 
-# model = pickle.load(open("nn_model.pkl", "rb"))
-# transformer = pickle.load(open("transformer.pkl", "rb"))
+# with open("../models/nn_model.pkl", "rb") as rf:
+#     clf = pickle.load(rf)
+# model = pickle.load(open("../../models/nn_model.pkl", "rb"))
+# transformer = pickle.load(open("../../models/transformer.pkl", "rb"))
 strains = pd.read_csv("https://raw.githubusercontent.com/Build-Week-Med-Cabinent-4/data-science/main/data/clean/merged_dataset.csv")
+<<<<<<< HEAD
 strains['Id'] = strians['Id'].astype(str)
+=======
+strains['Id'] = strains['Id'].astype(str)
+>>>>>>> 27f0d6e5abbd724239833451d13f886fed8b631d
 
 class Inputs(BaseModel):
     """Use this data model to parse the request body JSON."""
 
-    ailment: str
+    ailment: str = Field(..., example="stress and insomnia")
     flavor = ''
-    effects = '' 
+    effects = ''
 
     def input_string(self):
         """Convert pydantic object to string to prep for model."""
         inputs = self.ailment + ' ' + self.flavor + ' ' + self.effects
         return inputs
     
-    @validator('ailment')
-    def ailment_must_have_val(cls, value):
-        """Validate that ailment has a value inputted."""
-        assert value != str, f'ailment == {value}, must have an input'
-        return value
+    # @validator('ailment')
+    # def ailment_must_have_val(cls, value):
+    #     """Validate that ailment has a value inputted."""
+    #     assert value != str, f'ailment == {value}, must have an input'
+    #     return value
 
 
 # Variables for predictive model.
@@ -76,6 +83,6 @@ async def predict(inputs: Inputs):
     for recommendation in recommendations:
         strain = strains.iloc[recommendation]
         output = strain.drop([
-            'Unnamed: 0', 'name', 'ailment', 'all_text', 'lemmas']).to_dict()
+            'name', 'ailment', 'all_text', 'lemmas']).to_dict()
         output_array.append(output)
     return output_array

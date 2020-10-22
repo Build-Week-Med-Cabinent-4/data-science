@@ -31,19 +31,19 @@ app.include_router(predict.router)
 app.include_router(db_model.router)
 
 # Origins allowed for CORSMiddleware
-origins = [
-    "http://localhost.tiangolo.com",
-    "https://localhost.tiangolo.com",
-    "http://localhost",
-    "http://localhost:8080",
-    "http://localhost:3000",
-]
+# origins = [
+#     "http://localhost.tiangolo.com",
+#     "https://localhost.tiangolo.com",
+#     "http://localhost",
+#     "http://localhost:8080",
+#     "http://localhost:3000",
+# ]
 
 # Set the parameters for CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origin_regex='https?://.*',
-    allow_origins=origins,
+    allow_origins=['*'],
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*'],
