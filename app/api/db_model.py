@@ -21,7 +21,8 @@ SessionLocal = sessionmaker(autocommit=False,
 Base = declarative_base()
 
 class Strains(Base):
-    
+   '''Creates a table containing all the strains utilized in
+    the creation of the NLP machine learning model used to return the API responce''' 
     __tablename__ = 'strains'
     
     ID = Column(Integer, primary_key=True)
@@ -35,7 +36,8 @@ class Strains(Base):
     inputs = relationship('InputsDB', back_populates='strains')
 
 class InputsDB(Base):
-    
+    '''Creates a table within the database to store user inputs
+    for use for later marketing and visualization purposes'''
     __tablename__ = 'inputs_db'
     
     ID = Column(Integer, primary_key=True)

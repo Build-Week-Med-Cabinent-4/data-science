@@ -14,6 +14,7 @@ router = APIRouter()
 # model = pickle.load(open("nn_model.pkl", "rb"))
 # transformer = pickle.load(open("transformer.pkl", "rb"))
 strains = pd.read_csv("https://raw.githubusercontent.com/Build-Week-Med-Cabinent-4/data-science/main/data/clean/merged_dataset.csv")
+strains['Id'] = strians['Id'].astype(str)
 
 class Inputs(BaseModel):
     """Use this data model to parse the request body JSON."""
