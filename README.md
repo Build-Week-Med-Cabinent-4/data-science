@@ -11,7 +11,7 @@ For the Data Science portion of this project we created a connection from the ra
 - **Deployed to Heroku: https://strains-cannabis.herokuapp.com/**
 
 ## Schema
-The API contains two databases strains and inputs. strains contains all the possible outputs that the model can return. The inputs database will contain the search history of the users as they utilize the API for future research purposes(currently not functional as of 10/21/2020). 
+The API contains one database. strains contains all the possible outputs that the model can return. 
 The database is structured as follows:  
 - Strains  
    - ID: Primary Key integer identifier for each strain in the table   
