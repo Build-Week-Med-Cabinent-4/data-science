@@ -11,19 +11,13 @@ For the Data Science portion of this project we created a connection from the ra
 - **Deployed to Heroku: https://strains-cannabis.herokuapp.com/**
 
 ## Schema
-The API contains two databases strains and inputs. strains contains all the possible outputs that the model can return. The inputs database will contain the search history of the users as they utilize the API for future research purposes(currently not functional as of 10/21/2020). 
+The API contains one database. strains contains all the possible outputs that the model can return. 
 The database is structured as follows:  
-    - Strains  
-        - ID: Primary Key integer identifier for each strain in the table   
-        - Strain_name: String identifier for the strains     
-        - Strain_type: identifies the variant of the marijuana (Sativa, Indica or Hybrid)  
-        - Description: string describing the strain  
-        - Effect: Expected impacts of consuming the strain  
-        - Aliment: Medical conditions that the strain is intended to alleviate  
-        - Flavor: What the strain is intended to taste like   
-    - Inputs  
-        - ID: Primary Key integer identifier for each user input   
-        - Aliment_In: User inputted Aliment   
-        - Flavor_In: User inputted Flavor  
-        - Effects_In: User inputted effects  
-        - Strain_In: Model output based on user outputs   
+- Strains  
+   - ID: Primary Key integer identifier for each strain in the table   
+   - Strain_name: String identifier for the strains     
+   - Strain_type: identifies the variant of the marijuana (Sativa, Indica or Hybrid)  
+   - Description: string describing the strain  
+   - Effect: Expected impacts of consuming the strain  
+   - Aliment: Medical conditions that the strain is intended to alleviate  
+   - Flavor: What the strain is intended to taste like   
