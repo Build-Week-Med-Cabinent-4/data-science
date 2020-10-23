@@ -21,9 +21,3 @@ The database is structured as follows:
    - Effect: Expected impacts of consuming the strain  
    - Aliment: Medical conditions that the strain is intended to alleviate  
    - Flavor: What the strain is intended to taste like   
-- Inputs  
-   - ID: Primary Key integer identifier for each user input   
-   - Aliment_In: User inputted Aliment   
-   - Flavor_In: User inputted Flavor  
-   - Effects_In: User inputted effects  
-   - Strain_In: Model output based on user outputs   
