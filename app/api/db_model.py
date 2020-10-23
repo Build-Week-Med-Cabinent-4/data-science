@@ -21,7 +21,12 @@ Base = declarative_base()
 
 
 class Strains(Base):
+<<<<<<< HEAD
+   '''Creates a table containing all the strains utilized in
+    the creation of the NLP machine learning model used to return the API responce''' 
+=======
 
+>>>>>>> 3fb6fdca91fd10de65c50c60d68a8d7a2a00be67
     __tablename__ = 'strains'
 
     ID = Column(Integer, primary_key=True)
@@ -34,7 +39,12 @@ class Strains(Base):
 
 
 class InputsDB(Base):
+<<<<<<< HEAD
+    '''Creates a table within the database to store user inputs
+    for use for later marketing and visualization purposes'''
+=======
 
+>>>>>>> 3fb6fdca91fd10de65c50c60d68a8d7a2a00be67
     __tablename__ = 'inputs_db'
 
     ID = Column(Integer, primary_key=True)
