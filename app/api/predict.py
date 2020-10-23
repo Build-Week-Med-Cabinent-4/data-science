@@ -12,6 +12,7 @@ router = APIRouter()
 
 
 strains = pd.read_csv("https://raw.githubusercontent.com/Build-Week-Med-Cabinent-4/data-science/main/data/clean/merged_dataset.csv")
+
 '''Needed to convert the Id column to a string type in order to display using 
  Fast API'''
 strains['Id'] = strains['Id'].astype(str)
